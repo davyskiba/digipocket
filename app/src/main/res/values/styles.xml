@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DigiPocket" parent="Theme.AppCompat" >
+        <item name="colorAccent">@color/pocket_primary_accent</item>
+        <item name="android:colorBackground">@color/pocket_gray_darker</item>
+        <item name="colorPrimary">@color/pocket_black_lighter</item>
+        <item name="android:textColorPrimary">@color/pocket_primary_text</item>
+        <item name="android:windowBackground">@color/pocket_gray_lighter</item>
+        <item name="colorPrimaryDark">@color/pocket_black</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>

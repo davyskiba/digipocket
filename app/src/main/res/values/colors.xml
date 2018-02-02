@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pocket_gray_darker">#d2000000</color>
+    <color name="pocket_black_lighter">#cf000000</color>
+    <color name="pocket_black">#fa000000</color>
+    <color name="pocket_gray_lighter">#79000000</color>
+
+    <color name="pocket_primary_accent">#f05a28</color>
+    <color name="pocket_secondary_accent">#FF6F00</color>
+    <color name="pocket_error">#FFE73519</color>
+
+    <!-- fonts color-->
+    <color name="pocket_primary_text">#ffffff</color>
+    <color name="pocket_secondary_text">#F3F3F3</color>
+    <color name="pocket_text_darker_white">#ffe8e8f0</color>
+
+    <color name="pocket_additional_light">#FFECB3</color>
+
+    <!-- foreground -->
+    <color name="fg_error">#ffe73519</color>
+    <color name="fg_warning">@color/fg_error</color>
+
+    <!-- background -->
+    <color name="bg_bright">#ffffff</color>
+    <color name="bg_less_bright">#87ffffff</color>
+    <color name="bg_panel">#d8d8e0</color>
+    <color name="bg_form">#ffe8e8f0</color>
+    <color name="bg_list">#40ffffff</color>
+    <color name="bg_list_selected">#40808090</color>
+    <color name="bg_dialog_title">#ffb8b8b0</color>
+
+    <!-- scanner -->
+    <color name="scan_mask">#60000000</color>
+    <color name="scan_laser">#cc0000</color>
+    <color name="scan_dot">#ff6600</color>
+    <color name="scan_result_view">#b0000000</color>
+</resources>
