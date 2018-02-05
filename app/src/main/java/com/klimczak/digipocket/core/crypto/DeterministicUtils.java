@@ -39,18 +39,9 @@ public class DeterministicUtils {
         return ECKey.CURVE.getCurve().createPoint(pubKPoint.getX().toBigInteger(), pubKPoint.getY().toBigInteger(), true);
     }
 
-    public static ECPoint toUncompressed(ECPoint pubKPoint) {
-        return ECKey.CURVE.getCurve().createPoint(pubKPoint.getX().toBigInteger(), pubKPoint.getY().toBigInteger(), false);
-    }
 
     public static byte[] toCompressed(byte[] uncompressedPoint) {
         return compressedCopy(ECKey.CURVE.getCurve().decodePoint(uncompressedPoint)).getEncoded();
-    }
-
-    public static byte[] longTo4ByteArray(long n) {
-        byte[] bytes = Arrays.copyOfRange(ByteBuffer.allocate(8).putLong(n).array(), 4, 8);
-        assert bytes.length == 4 : bytes.length;
-        return bytes;
     }
 
     public static byte[] getBytes(ECPoint pubKPoint) {
@@ -60,5 +51,6 @@ public class DeterministicUtils {
     public static ImmutableList<ChildNumber> append(ImmutableList<ChildNumber> path, ChildNumber childNumber) {
         return ImmutableList.<ChildNumber>builder().addAll(path).add(childNumber).build();
     }
+
 }
 
