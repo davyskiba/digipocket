@@ -27,8 +27,7 @@ public class MnemonicCode {
     }
 
     /**
-     * Creates an MnemonicCode object, initializing with words read from the supplied input stream.  If a wordListDigest
-     * is supplied the digest of the words will be checked.
+     *  Tworzy obiekt na bazie słów z pliku- sprawdza ze skrótem czy to ten sam plik
      */
     public MnemonicCode(InputStream wordstream, String wordListDigest) throws IOException, IllegalArgumentException {
         BufferedReader br = new BufferedReader(new InputStreamReader(wordstream, "UTF-8"));
@@ -49,7 +48,6 @@ public class MnemonicCode {
         if (this.wordList.size() != 2048)
             throw new IllegalArgumentException("input stream did not contain 2048 words");
 
-        // If a wordListDigest is supplied check to make sure it matches.
         if (wordListDigest != null) {
             byte[] digest = md.digest();
             String hexdigest = new String(Hex.encode(digest));
@@ -59,7 +57,7 @@ public class MnemonicCode {
     }
 
     /**
-     * Convert mnemonic word list to seed.
+     * Zamian ciągu mnemoników do listy słów
      */
     public static byte[] toSeed(List<String> words) {
         return toSeed(words, "");
@@ -67,7 +65,7 @@ public class MnemonicCode {
 
     public static byte[] toSeed(List<String> words, String passphrase) {
 
-        // To create binary seed from mnemonic, we use PBKDF2 function
+        //  Żeby utworzyć
         // with mnemonic sentence (in UTF-8) used as a password and
         // string "mnemonic" + passphrase (again in UTF-8) used as a
         // salt. Iteration count is set to 4096 and HMAC-SHA512 is

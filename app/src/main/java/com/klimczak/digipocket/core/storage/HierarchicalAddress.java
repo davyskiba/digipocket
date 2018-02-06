@@ -26,7 +26,7 @@ public class HierarchicalAddress {
 
     private static Logger log = LoggerFactory.getLogger(HierarchicalAddress.class);
 
-    private NetworkParameters mParams;
+    private NetworkParameters   mParams;
     private int					mAddrNum;
     private String				mPath;
     private byte[]				mPrvBytes;
@@ -46,13 +46,12 @@ public class HierarchicalAddress {
 
         // Derive ECKey.
         mPrvBytes = dk.getPrivKeyBytes();
-        mPubBytes = dk.getPubKeyBytes(); // Expensive, save.
+        mPubBytes = dk.getPubKeyBytes();
         mECKey = new ECKey(mPrvBytes, mPubBytes);
 
         // Derive public key, public hash and address.
         mPubKey = mECKey.getPubKey();
         mPubKeyHash = mECKey.getPubKeyHash();
-
         mAddress = mECKey.toAddress(params);
 
 
@@ -124,11 +123,7 @@ public class HierarchicalAddress {
     }
 
     public String getAbbrev() {
-        return mAddress.toString().substring(0, 12) + "...";
-    }
-
-    public String getPrivateKeyString() {
-        return mECKey.getPrivateKeyEncoded(mParams).toString();
+        return mAddress.toString().substring(0, 16) + "...";
     }
 
     public Address getAddress() {

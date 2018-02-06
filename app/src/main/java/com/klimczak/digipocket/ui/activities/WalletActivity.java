@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -21,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class WalletActivity extends AppCompatActivity {
+public class WalletActivity extends ToolbarActivity {
 
     private static Logger log = LoggerFactory.getLogger(HierarchicalAddress.class);
 
@@ -31,11 +34,35 @@ public class WalletActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
+        setupToolbar();
+
         DigiPocket pocket =  (DigiPocket) getApplicationContext();
         storage = pocket.getStorage();
         updateChains();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_seed, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.seed:
+                Intent intent = new Intent(this, ViewSeedActivity.class);
+                this.startActivity(intent);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return true;
+
+    }
 
     private void updateChains() {
         HierarchicalWallet wallet = storage.getWallet();
@@ -92,7 +119,6 @@ public class WalletActivity extends AppCompatActivity {
 
         // Dispatch to the address viewer.
         Intent intent = new Intent(this, ViewAddressActivity.class);
-        intent.putExtra("key", addr.getPrivateKeyString());
         intent.putExtra("address", addrstr);
         startActivity(intent);
     }

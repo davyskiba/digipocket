@@ -17,9 +17,7 @@ import android.view.View.OnClickListener;
 
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.google.bitcoin.core.Wallet;
 import com.klimczak.digipocket.R;
 import com.klimczak.digipocket.utils.WalletUtils;
 
@@ -30,7 +28,7 @@ import org.spongycastle.crypto.InvalidCipherTextException;
 import java.io.IOException;
 
 
-public class PasswordActivity extends AppCompatActivity {
+public class PasswordActivity extends ToolbarActivity {
 
     private static Logger log = LoggerFactory.getLogger(PasswordActivity.class);
 
@@ -52,6 +50,7 @@ public class PasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
+        setupToolbar();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordConfirmView = (EditText) findViewById(R.id.password_confirm);
@@ -68,7 +67,7 @@ public class PasswordActivity extends AppCompatActivity {
         } else if (action.equals("create")) {
             mAction = Action.ACTION_CREATE;
             log.info("ACTION_CREATE");
-        } else if (action.equals("load")) {
+        } else if (action.equals("restore")) {
             mAction = Action.ACTION_RESTORE;
             log.info("ACTION_RESTORE");
         } else if (action.equals("login")) {
@@ -122,12 +121,8 @@ public class PasswordActivity extends AppCompatActivity {
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
             new ValidatePasswordTask().execute(password);
 
         }
@@ -135,11 +130,9 @@ public class PasswordActivity extends AppCompatActivity {
 
     private void attemptCreate() {
 
-        // Reset errors.
         mPasswordView.setError(null);
         mPasswordConfirmView.setError(null);
 
-        // Store values at the time of the login attempt.
         String password = mPasswordView.getText().toString();
         String passwordCheck = mPasswordConfirmView.getText().toString();
 
@@ -170,22 +163,16 @@ public class PasswordActivity extends AppCompatActivity {
                 cancel = true;
             }
         }
-        // Checked for all?
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
             new SetupPasswordTask().execute(password);
         }
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 4 && password.length() <= 32;
+        return password.length() >= 8 && password.length() <= 32;
     }
-
 
     private void validateComplete(boolean isValid) {
 
@@ -220,16 +207,16 @@ public class PasswordActivity extends AppCompatActivity {
             case ACTION_CREATE:
                 // Create the wallet.
                 WalletUtils.createWallet(getApplicationContext());
-
                 intent = new Intent(this, WalletActivity.class);
-                Bundle bundle2 = new Bundle();
-                bundle2.putBoolean("showDone", true);
-                intent.putExtras(bundle2);
                 startActivity(intent);
-                finish();
+                break;
+            case ACTION_RESTORE:
+                intent = new Intent(this, RestoreWalletActivity.class);
+                startActivity(intent);
                 break;
 
         }
+        finish();
     }
 
     private class SetupPasswordTask extends AsyncTask<String, Void, Void> {
@@ -245,7 +232,7 @@ public class PasswordActivity extends AppCompatActivity {
         protected Void doInBackground(String... arg0)
         {
             String password = arg0[0];
-            // This takes a while (scrypt) ...
+            // Scrypt...
             WalletUtils.setPasswordForWallet(getApplicationContext(), password);
             return null;
         }
@@ -269,7 +256,7 @@ public class PasswordActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... arg0)
         {
             String passcode = arg0[0];
-            // This takes a while (scrypt) ...
+            //scrypt
             return WalletUtils.isPasswordValid(getApplicationContext(), passcode);
         }
 

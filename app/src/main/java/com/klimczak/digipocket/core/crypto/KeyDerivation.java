@@ -66,7 +66,7 @@ public class KeyDerivation {
     public static DeterministicKey deriveChildKey(DeterministicKey parent, ChildNumber childNumber)
             throws KeyDerivationException {
 
-        KeyDerivation.RawKeyBytes rawKey = deriveChildKeyBytes(parent, childNumber);
+        KeyDerivation.KeyBytes rawKey = deriveChildKeyBytes(parent, childNumber);
 
         return new DeterministicKey(
                 DeterministicUtils.append(parent.getChildNumberPath(), childNumber),
@@ -76,7 +76,7 @@ public class KeyDerivation {
                 parent);
     }
 
-    private static KeyDerivation.RawKeyBytes deriveChildKeyBytes(DeterministicKey parent, ChildNumber childNumber)
+    private static KeyDerivation.KeyBytes deriveChildKeyBytes(DeterministicKey parent, ChildNumber childNumber)
             throws KeyDerivationException {
 
         byte[] parentPublicKey = DeterministicUtils.getBytes(parent.getPubPoint());
@@ -106,7 +106,7 @@ public class KeyDerivation {
             checkArgument(!Ki.equals(ECKey.CURVE.getCurve().getInfinity()), "Illegal derived key: derived public key equals infinity.");
             keyBytes = DeterministicUtils.toCompressed(Ki.getEncoded());
         }
-        return new KeyDerivation.RawKeyBytes(keyBytes, chainCode);
+        return new KeyDerivation.KeyBytes(keyBytes, chainCode);
     }
 
     private static void assertNonZero(BigInteger integer, String errorMessage) {
@@ -117,10 +117,10 @@ public class KeyDerivation {
         checkArgument(integer.compareTo(ECKey.CURVE.getN()) < 0, errorMessage);
     }
 
-    private static class RawKeyBytes {
+    private static class KeyBytes {
         private final byte[] keyBytes, chainCode;
 
-        private RawKeyBytes(byte[] keyBytes, byte[] chainCode) {
+        private KeyBytes(byte[] keyBytes, byte[] chainCode) {
             this.keyBytes = keyBytes;
             this.chainCode = chainCode;
         }

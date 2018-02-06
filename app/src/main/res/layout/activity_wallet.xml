@@ -8,6 +8,7 @@
     android:layout_height="fill_parent"
     android:gravity="center"
     >
+    <include layout="@layout/app_bar"/>
 
     <LinearLayout
         android:orientation="vertical"

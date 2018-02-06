@@ -25,8 +25,7 @@ public class SPVBlockDowloadListener extends AbstractPeerEventListener {
     public void onChainDownloadStarted(Peer peer, int blocksLeft) {
         if (blocksLeft > 0 && originalBlocksLeft == -1)
             startDownload(blocksLeft);
-        // Only mark this the first time, because this method can be called more than once during a chain download
-        // if we switch peers during it.
+
         if (originalBlocksLeft == -1)
             originalBlocksLeft = blocksLeft;
         else

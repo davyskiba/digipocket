@@ -42,7 +42,7 @@ public class DigiPocket extends Application {
     @Override
     public void onCreate()
     {
-        // Apply PRNGFixes.
+        // PRNGFixes.
         PRNGFixes.apply();
         super.onCreate();
 

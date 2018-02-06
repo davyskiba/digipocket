@@ -64,7 +64,7 @@ public class WalletUtils {
         KeyCrypter keyCrypter = getKeyCrypter(salt);
         KeyParameter aesKey = keyCrypter.deriveKey(password);
 
-        // Set up the  credentials.
+        //
         pocket.setPassword(password);
         pocket.setKeyCrypter(keyCrypter);
         pocket.setAesKey(aesKey);

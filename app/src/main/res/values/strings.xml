@@ -1,26 +1,5 @@
 <resources>
     <string name="app_name">DigiPocket</string>
-    <string name="large_text"></string>
-    <string name="action_settings">Settings</string>
-    <string name="action_search">Search</string>
-    <string name="action_filter">Filter</string>
-    <string name="action_order">Order</string>
-    <string name="title_name">Stan konta </string>
-    <string name="subtitle_name">Stan konta - niepotwierdzone</string>
-
-    <string name="hello_world">Hello world!</string>
-
-    <string name="send_action">SEND</string>
-    <string name="receive">RECEIVE</string>
-
-    <!-- navigation menu-->
-    <string name="nav_settings">Settings</string>
-    <string name="nav_qrcode">QrCode</string>
-    <string name="nav_send">Send</string>
-    <string name="nav_receive">Receive</string>
-    <string name="nav_options">Options</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
-    <string name="title_activity_password">Create password</string>
 
     <!-- Login Activity -->
     <string name="prompt_password">Hasło</string>
@@ -49,7 +28,25 @@
     <string name="address_header_path">Ścieżka</string>
     <string name="address_header_addr">Adres</string>
 
-    <string name="title_activity_startup">StartupActivity</string>
+    <!-- Restore Wallet-->
+    <string name="restore_info">Zeskanuj zaszyfrowany kod QR i odszyfruj za pomocą hasła</string>
+    <string name="restore_wallet">Odzyskaj portfel</string>
+    <string name="read_encrypted_qrcode">Wczytaj kod QR</string>
+    <string name="restore_noseed">Brak odszyfrowanego ziarna</string>
+    <string name="restore_badlength">Nieprawidłowy rozmiar listy słów - powinno być 12</string>
+    <string name="restore_badword">%1$s nie jest na liście słów</string>
+    <string name="restore_badchecksum">Błąd sumy kontrolnej - niewłaściwa lista słów</string>
+
+    <!-- Seed Activity -->
+    <string name="seed_directions">Utwórz zaszyfrowany kod QR ziarna portfela </string>
+    <string name="seed_qr_label">Kod QR</string>
+    <string name="create_encrypted_qrcode">Utwórz kod QR</string>
+
+    <string name="title_activity_startup">Startup Activity</string>
     <string name="title_activity_create_restore">Utwórz/Odzyskaj</string>
-    <string name="title_activity_view_address">ViewAddressActivity</string>
+    <string name="title_activity_view_address">Wyświetl adres</string>
+    <string name="title_activity_password">Utwórz hasło</string>
+    <string name="title_activity_restore">Odzyskaj portfel</string>
+    <string name="title_activity_viewseed">Ziarno portfela</string>
+
 </resources>

@@ -10,7 +10,7 @@ import com.klimczak.digipocket.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CreateRestoreActivity extends Activity {
+public class CreateRestoreActivity extends ToolbarActivity {
 
 
     private static Logger log = LoggerFactory.getLogger(CreateRestoreActivity.class);
@@ -19,6 +19,7 @@ public class CreateRestoreActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_restore);
+        setupToolbar();
     }
 
 
@@ -30,7 +31,6 @@ public class CreateRestoreActivity extends Activity {
         bundle.putString("action", "create");
         intent.putExtras(bundle);
         startActivity(intent);
-
         finish();
     }
 
@@ -39,7 +39,7 @@ public class CreateRestoreActivity extends Activity {
 
         Intent intent = new Intent(this, PasswordActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("action", "load");
+        bundle.putString("action", "restore");
         intent.putExtras(bundle);
         startActivity(intent);
 

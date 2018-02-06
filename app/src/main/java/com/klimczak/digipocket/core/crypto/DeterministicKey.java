@@ -60,7 +60,7 @@ public class DeterministicKey implements Serializable {
     }
 
     /**
-     * Zwraca ostatni element w ścieżce
+     * Zwraca numer dziecka - ostatni element w ścieżce
      */
     public ChildNumber getChildNumber() {
         return getDepth() == 0 ? ChildNumber.ZERO : childNumberPath.get(childNumberPath.size() - 1);
@@ -81,11 +81,8 @@ public class DeterministicKey implements Serializable {
     }
 
     /**
-     * Identyfikator - skrót klucza publicznego.
+     *  Zwraca klucz publiczy jak punkt krzywej eliptycznej
      */
-    public byte[] getIdentifier() {
-        return Utils.sha256hash160(getPubKeyBytes());
-    }
 
     ECPoint getPubPoint() {
         if (publicAsPoint == null) {
@@ -95,6 +92,9 @@ public class DeterministicKey implements Serializable {
         return DeterministicUtils.compressedCopy(publicAsPoint);
     }
 
+    /**
+     * Zwraca klucz publiczny jako tablica bajtów
+     */
     public byte[] getPubKeyBytes() {
         return getPubPoint().getEncoded();
     }
@@ -119,7 +119,7 @@ public class DeterministicKey implements Serializable {
     }
 
     /**
-     * @return private key bytes, padded with zeros to 33 bytes.
+     * Zwraca klucz prywatny  - jeden bajt padu
      */
     public byte[] getPrivKeyBytes33() {
         byte[] bytes33 = new byte[33];
