@@ -28,13 +28,9 @@ import org.slf4j.LoggerFactory;
 
 public class RestoreWalletActivity extends ToolbarActivity {
 
-    private static final int SCANNER_ACTIVITY_REQUEST_CODE = 21331;
-
     private static Logger log = LoggerFactory.getLogger(RestoreWalletActivity.class);
 
-    private Resources mRes;
-
-    private String qrCodeReadingResult;
+    private String qrCodeScanningResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +43,42 @@ public class RestoreWalletActivity extends ToolbarActivity {
 
     public void restoreWallet(View view) {
         log.info("restore wallet");
+    }
 
+    public void onQrImageClicked(View view){
+        if(qrCodeScanningResult !=null){
+            showGetPasswordDialog();
+        }
+    }
+
+    private void showGetPasswordDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Podaj hasło");
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onUserEnteredPassword(input.getText().toString());
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void onUserEnteredPassword(String password) {
+        Toast.makeText(this, "Odszyfruj mnie "+password+" "+ qrCodeScanningResult, Toast.LENGTH_SHORT).show();
     }
 
     public void readEncryptedQrCode(View view) {
@@ -68,7 +99,7 @@ public class RestoreWalletActivity extends ToolbarActivity {
     }
 
     private void onQrCodeScanned(String scanResult) {
-        qrCodeReadingResult = scanResult;
+        qrCodeScanningResult = scanResult;
         Bitmap qrCodeBitmap = getQrCodeBitmap(scanResult);
         if (qrCodeBitmap != null) {
             ((ImageView) findViewById(R.id.qr_code)).setImageBitmap(qrCodeBitmap);
@@ -95,43 +126,5 @@ public class RestoreWalletActivity extends ToolbarActivity {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public static class PasswordDialogFragment extends DialogFragment {
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setRetainInstance(true);
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            super.onCreateDialog(savedInstanceState);
-            String msg = getArguments().getString("msg");
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(msg);
-
-            final EditText input = new EditText(getActivity());
-            input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
-            builder.setView(input);
-
-            builder.setPositiveButton(R.string.base_error_ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface di, int id) {
-                    //
-                }
-            });
-            return builder.create();
-        }
-    }
-
-    private void showPasswordDialog(String msg) {
-        DialogFragment df = new PasswordDialogFragment();
-        Bundle args = new Bundle();
-        args.putString("msg", msg);
-        df.setArguments(args);
-        df.show(getSupportFragmentManager(), "Błąd");
     }
 }

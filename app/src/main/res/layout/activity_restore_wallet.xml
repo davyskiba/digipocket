@@ -68,6 +68,7 @@
                 android:id="@+id/qr_code"
                 android:layout_width="240dp"
                 android:layout_height="240dp"
+                android:onClick="onQrImageClicked"
                 android:src="@drawable/ic_qrcode" />
 
 
