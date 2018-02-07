@@ -4,43 +4,30 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.preference.PreferenceManager;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioGroup;
+import android.widget.Toast;
 
-import com.google.bitcoin.core.NetworkParameters;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.klimczak.digipocket.R;
-import com.klimczak.digipocket.core.crypto.MnemonicCode;
-import com.klimczak.digipocket.core.crypto.MnemonicException;
-import com.klimczak.digipocket.core.storage.HierarchicalStorage;
-import com.klimczak.digipocket.ui.DigiPocket;
-import com.klimczak.digipocket.utils.Constants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class RestoreWalletActivity extends ToolbarActivity {
+
+    private static final int SCANNER_ACTIVITY_REQUEST_CODE = 21331;
 
     private static Logger log = LoggerFactory.getLogger(RestoreWalletActivity.class);
 
     private Resources mRes;
+
+    private String qrCodeReadingResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +43,27 @@ public class RestoreWalletActivity extends ToolbarActivity {
 
     }
 
-    public void readEncryptedQrCode(View view){
+    public void readEncryptedQrCode(View view) {
         log.info("read encrypted qr");
+        new IntentIntegrator(this).initiateScan();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     public static class PasswordDialogFragment extends DialogFragment {
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -82,7 +85,7 @@ public class RestoreWalletActivity extends ToolbarActivity {
 
             builder.setPositiveButton(R.string.base_error_ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface di, int id) {
-                //
+                    //
                 }
             });
             return builder.create();
