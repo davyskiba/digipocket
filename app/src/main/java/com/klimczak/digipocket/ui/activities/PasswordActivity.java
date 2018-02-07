@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.klimczak.digipocket.R;
 import com.klimczak.digipocket.utils.WalletUtils;
@@ -38,9 +39,11 @@ public class PasswordActivity extends ToolbarActivity {
         ACTION_LOGIN,
     }
 
-    // UI references.
+
+    private TextView mInfoTextView;
     private EditText mPasswordView;
     private EditText mPasswordConfirmView;
+
 
     private Resources mRes;
 
@@ -52,8 +55,10 @@ public class PasswordActivity extends ToolbarActivity {
         setContentView(R.layout.activity_password);
         setupToolbar();
 
+
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordConfirmView = (EditText) findViewById(R.id.password_confirm);
+        mInfoTextView = (TextView) findViewById(R.id.info);
 
         mRes = getResources();
 
@@ -73,6 +78,7 @@ public class PasswordActivity extends ToolbarActivity {
         } else if (action.equals("login")) {
             mAction = Action.ACTION_LOGIN;
             mPasswordConfirmView.setVisibility(View.GONE);
+            mInfoTextView.setText(mRes.getText(R.string.wallet_found_info));
             log.info("ACTION_LOGIN");
         } else {
             String msg = "unknown action value " + action;

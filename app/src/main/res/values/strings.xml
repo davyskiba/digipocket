@@ -2,12 +2,14 @@
     <string name="app_name">DigiPocket</string>
 
     <!-- Login Activity -->
+    <string name="wallet_found_info">Wykryto portfel - podaj hasło aby odszyfrować</string>
+    <string name="wallet_not_found_info">Nie wykryto portfel - utwórz nowy podając hasło</string>
     <string name="prompt_password">Hasło</string>
     <string name="prompt_password_confirm">Powtórz hasło</string>
     <string name="action_sign_in">Potwierdź</string>
     <string name="action_sign_in_short">Potwierdz</string>
     <string name="error_field_required">Pole jest wymagane</string>
-    <string name="error_invalid_password">To hasło jest za krótkie</string>
+    <string name="error_invalid_password">To hasło jest za krótkie, wymagane jest przynajmniej 8 znaków</string>
     <string name="error_invalid_password_confirm">Te hasła są różne</string>
     <string name="error_incorrect_password">Hasło jest nieprawidłowe</string>
     <string name="password_waitsetup">Portfel jest szyfrowany, przygotowanie może potrwać kilka sekund!</string>
@@ -19,6 +21,7 @@
 
 
     <!--Create/Restore Activity-->
+    <string name="info_about">Digipocket to portfel przechowujący klucze służące do wymiany cyfrowych waluty Bitcoin. Utwórz nowy portfel lub odzyskaj już istniejący</string>
     <string name="button_create">Utwórz portfel</string>
     <string name="button_restore">Odzyskaj portel</string>
 
@@ -46,6 +49,7 @@
     <string name="title_activity_create_restore">Utwórz/Odzyskaj</string>
     <string name="title_activity_view_address">Wyświetl adres</string>
     <string name="title_activity_password">Utwórz hasło</string>
+    <string name="title_activity_password_create">Tworzenie portfela</string>
     <string name="title_activity_restore">Odzyskaj portfel</string>
     <string name="title_activity_viewseed">Ziarno portfela</string>
 

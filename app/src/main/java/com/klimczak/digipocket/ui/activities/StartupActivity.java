@@ -24,7 +24,7 @@ public class StartupActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup);
 
-        log.info("Startup onCreate");
+        log.info("Startup activity onCreate");
 
         pocket = (DigiPocket) getApplicationContext();
         doOpenWallet();
@@ -35,7 +35,7 @@ public class StartupActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        log.info("LobbyActivity resumed");
+        log.info("Startup activity resumed");
     }
 
 
