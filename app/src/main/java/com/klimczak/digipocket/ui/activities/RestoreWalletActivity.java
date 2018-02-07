@@ -34,7 +34,6 @@ public class RestoreWalletActivity extends ToolbarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mRes = getApplicationContext().getResources();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore_wallet);
         setupToolbar();
