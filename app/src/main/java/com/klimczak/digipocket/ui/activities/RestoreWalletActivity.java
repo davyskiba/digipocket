@@ -5,15 +5,22 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.klimczak.digipocket.R;
 
 import org.slf4j.Logger;
@@ -51,14 +58,42 @@ public class RestoreWalletActivity extends ToolbarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null) {
-            if(result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+        if (result != null) {
+            if (result.getContents() != null) {
+                onQrCodeScanned(result.getContents());
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void onQrCodeScanned(String scanResult) {
+        qrCodeReadingResult = scanResult;
+        Bitmap qrCodeBitmap = getQrCodeBitmap(scanResult);
+        if (qrCodeBitmap != null) {
+            ((ImageView) findViewById(R.id.qr_code)).setImageBitmap(qrCodeBitmap);
+        } else {
+            Toast.makeText(this, "Qr code generation failed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private Bitmap getQrCodeBitmap(String content) {
+        QRCodeWriter writer = new QRCodeWriter();
+        try {
+            BitMatrix bitMatrix = writer.encode(content, BarcodeFormat.QR_CODE, 512, 512);
+            int width = bitMatrix.getWidth();
+            int height = bitMatrix.getHeight();
+            Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+                }
+            }
+
+            return bmp;
+        } catch (WriterException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

@@ -34,5 +34,6 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.6'
     compile 'org.slf4j:slf4j-jdk14:1.7.25'
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
+    compile 'com.google.zxing:core:2.2'
     testCompile 'junit:junit:4.12'
 }
